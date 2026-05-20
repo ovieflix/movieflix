@@ -38,13 +38,13 @@
       padding: 20px 6%;
     }
 
+    /* ── NAV ── */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 80px;
-      flex-wrap: wrap;
-      gap: 20px;
+      position: relative;
     }
 
     .logo {
@@ -85,6 +85,89 @@
       background: #ff336d;
     }
 
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      padding: 4px;
+      background: none;
+      border: none;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2.5px;
+      background: white;
+      border-radius: 3px;
+      transition: all 0.35s ease;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* ── MOBILE MENU OVERLAY ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(5,5,5,0.97);
+      z-index: 1000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover {
+      color: #ff004c;
+    }
+
+    .mobile-menu .ad-btn {
+      font-size: 1rem;
+      padding: 14px 32px;
+    }
+
+    /* ── HERO CONTENT ── */
     .hero-content {
       max-width: 650px;
       margin-top: 80px;
@@ -132,6 +215,7 @@
       font-weight: 600;
     }
 
+    /* ── SECTIONS ── */
     .section {
       padding: 70px 6%;
     }
@@ -225,32 +309,101 @@
       border-top: 1px solid rgba(255,255,255,.08);
     }
 
-    @media(max-width:768px){
+    /* ── RESPONSIVE ── */
+    @media(max-width: 768px) {
       .hero-content h1 {
-        font-size: 2.6rem;
+        font-size: 2.2rem;
+      }
+
+      .hero-content {
+        margin-top: 40px;
+      }
+
+      /* hide desktop nav links, show hamburger */
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
       }
 
       nav {
-        justify-content: center;
+        margin-bottom: 40px;
       }
 
       .search-box {
+        border-radius: 15px;
         flex-direction: column;
-        border-radius: 20px;
+        max-width: 100%;
       }
 
       .search-box input,
       .search-box button {
         width: 100%;
+        border-radius: 0;
       }
 
       .search-box button {
-        border-radius: 0;
+        padding: 14px;
+      }
+
+      .movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .movie-card img {
+        height: 200px;
+      }
+
+      .movie-info h3 {
+        font-size: 13px;
+      }
+
+      .section {
+        padding: 40px 4%;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+      }
+
+      .ad-banner h2 {
+        font-size: 1.4rem;
+      }
+
+      .ad-banner {
+        padding: 25px 20px;
+        margin: 30px 0;
+      }
+    }
+
+    @media(max-width: 400px) {
+      .movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#movies" onclick="closeMenu()">Movies</a>
+    <a href="#movies" onclick="closeMenu()">Trending</a>
+    <a href="#movies" onclick="closeMenu()">Popular</a>
+    <a class="ad-btn" href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank" onclick="closeMenu()">Premium Access</a>
+  </div>
 
   <section class="hero">
     <nav>
@@ -262,6 +415,13 @@
         <a href="#movies">Popular</a>
         <a class="ad-btn" href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank">Premium Access</a>
       </div>
+
+      <!-- Hamburger Button -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
 
     <div class="hero-content">
@@ -279,10 +439,7 @@
 
   <section class="section" id="movies">
     <h2 class="section-title">Trending Movies</h2>
-
-    <div class="movies-grid" id="movieGrid">
-
-    </div>
+    <div class="movies-grid" id="movieGrid"></div>
   </section>
 
   <section class="section">
@@ -298,120 +455,60 @@
   </footer>
 
   <script>
+    // ── Hamburger Menu ──
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('hamburger');
+      menu.classList.toggle('open');
+      btn.classList.toggle('open');
+    }
+
+    function closeMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('hamburger');
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+    }
+
+    // Close menu on outside click
+    document.getElementById('mobileMenu').addEventListener('click', function(e) {
+      if (e.target === this) closeMenu();
+    });
+
+    // ── Movies Data ──
     const movies = [
-      {
-        title: '365 Days',
-        year: '2020',
-        image: "https://m.media-amazon.com/images/M/MV5BODRlZGMyZDQtZmM1OC00MzUxLWEyMWMtMzhlNTU4NzkxZDMxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-      },
-      {
-        title: 'Fifty Shades of Grey',
-        year: '2015',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzOi_oyknoRBsHv71CNy03Va0po371ltT-cg&s'
-      },
-      {
-        title: 'After',
-        year: '2019',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7-NJqIpt7G-Yjl4lRmJkTR_61Pve7GZfhwA&s'
-      },
-      {
-        title: 'Through My Window',
-        year: '2022',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrGOx7chTuDNOnk62bJ_ZD3iRxqs7HGL7S5Q&s'
-      },
-      {
-        title: 'Purple Hearts',
-        year: '2022',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4rMwQj1PRwSF90u-EGAFGwKHQrFyC7PGDNQ&s'
-      },
-      {
-        title: 'Beautiful Disaster',
-        year: '2023',
-        image: 'https://static.wikia.nocookie.net/beautifuldisaster/images/3/35/Beautiful_Disaster_Movie_Poster_02.jpg/revision/latest?cb=20230914043709'
-      },
-      {
-        title: 'The Notebook',
-        year: '2004',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjk1mcokchKy7nP_pneYUrBcM_XE8tDqlS-w&s'
-      },
-      {
-        title: 'Me Before You',
-        year: '2016',
-        image: 'https://miro.medium.com/1*phoo54iCPpnxkblKZ3jhJA.jpeg'
-      },
-      {
-        title: 'Endless Love',
-        year: '2014',
-        image: 'https://m.media-amazon.com/images/M/MV5BOTYzNDU1MzEyN15BMl5BanBnXkFtZTgwOTYwMTU0MDE@._V1_FMjpg_UX1000_.jpg'
-      },
-      {
-        title: 'Midnight Sun',
-        year: '2018',
-        image: 'https://m.media-amazon.com/images/M/MV5BMjg0NjU1MjgyNF5BMl5BanBnXkFtZTgwNzc5NjYyNDM@._V1_FMjpg_UX1000_.jpg'
-      },
-      {
-        title: 'The Vow',
-        year: '2012',
-        image: 'https://play-lh.googleusercontent.com/EOjpCrKLwbb13ledMuuhjoEErGMIiJzwWBXMdefUZyhd3VrcgI6MnzIdlGQhPGd7fVr7iFJDnfg3UkLWSrmm'
-      },
-      {
-        title: 'Dear John',
-        year: '2010',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8gDVNRDY-MJP0Y0LnSaDJAc-MpA4WewegAA&s'
-      },
-      {
-        title: 'Love Again',
-        year: '2023',
-        image: 'https://upload.wikimedia.org/wikipedia/en/2/21/Love_Again_film_poster.jpg'
-      },
-      {
-        title: 'The Choice',
-        year: '2016',
-        image: 'https://m.media-amazon.com/images/M/MV5BMTYzMDA2ODcxMV5BMl5BanBnXkFtZTgwODMzOTMzNzE@._V1_FMjpg_UX1000_.jpg'
-      },
-      {
-        title: 'Anyone But You',
-        year: '2024',
-        image: 'https://m.media-amazon.com/images/I/81vNRRVjT3L.jpg'
-      },
-      {
-        title: 'A Perfect Pairing',
-        year: '2022',
-        image: 'https://play-lh.googleusercontent.com/proxy/gN9UNWO8pWKp_uh7BIQP7N3n3vAT3SH__cRqCEX1F2l7HMcPonmDEcfpeMCBf4gGQoMXCycERHSbl_e4zYugiz-7z2KOG_fSI3P7nwyyUL4vmHCuip4dN8lYws61PdwvlpSudYU97BSQ4_rwKqN14Po9aO3hH2A8rF8inQ'
-      },
-      {
-        title: 'The Kissing Booth',
-        year: '2018',
-        image: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/The_Kissing_Booth_3.jpg/250px-The_Kissing_Booth_3.jpg'
-      },
-      {
-        title: 'Love and Other Drugs',
-        year: '2010',
-        image: 'https://m.media-amazon.com/images/I/91QV5djceIL._AC_UF894,1000_QL80_.jpg'
-      },
-      {
-        title: 'No Hard Feelings',
-        year: '2023',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_f4W4W4wlDOWCk64zl_MeJh55NUqKqd3mLQ&s'
-      },
-      {
-        title: 'The Last Letter From Your Lover',
-        year: '2021',
-        image: 'https://m.media-amazon.com/images/M/MV5BMDE4Y2RiYzQtOTE1My00Yjc1LTllYjYtY2E1ZmNlZTBiNGM0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'
-      }
+      { title: '365 Days', year: '2020', image: "https://m.media-amazon.com/images/M/MV5BODRlZGMyZDQtZmM1OC00MzUxLWEyMWMtMzhlNTU4NzkxZDMxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
+      { title: 'Fifty Shades of Grey', year: '2015', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzOi_oyknoRBsHv71CNy03Va0po371ltT-cg&s' },
+      { title: 'After', year: '2019', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7-NJqIpt7G-Yjl4lRmJkTR_61Pve7GZfhwA&s' },
+      { title: 'Through My Window', year: '2022', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrGOx7chTuDNOnk62bJ_ZD3iRxqs7HGL7S5Q&s' },
+      { title: 'Purple Hearts', year: '2022', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4rMwQj1PRwSF90u-EGAFGwKHQrFyC7PGDNQ&s' },
+      { title: 'Beautiful Disaster', year: '2023', image: 'https://static.wikia.nocookie.net/beautifuldisaster/images/3/35/Beautiful_Disaster_Movie_Poster_02.jpg/revision/latest?cb=20230914043709' },
+      { title: 'The Notebook', year: '2004', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjk1mcokchKy7nP_pneYUrBcM_XE8tDqlS-w&s' },
+      { title: 'Me Before You', year: '2016', image: 'https://miro.medium.com/1*phoo54iCPpnxkblKZ3jhJA.jpeg' },
+      { title: 'Endless Love', year: '2014', image: 'https://m.media-amazon.com/images/M/MV5BOTYzNDU1MzEyN15BMl5BanBnXkFtZTgwOTYwMTU0MDE@._V1_FMjpg_UX1000_.jpg' },
+      { title: 'Midnight Sun', year: '2018', image: 'https://m.media-amazon.com/images/M/MV5BMjg0NjU1MjgyNF5BMl5BanBnXkFtZTgwNzc5NjYyNDM@._V1_FMjpg_UX1000_.jpg' },
+      { title: 'The Vow', year: '2012', image: 'https://play-lh.googleusercontent.com/EOjpCrKLwbb13ledMuuhjoEErGMIiJzwWBXMdefUZyhd3VrcgI6MnzIdlGQhPGd7fVr7iFJDnfg3UkLWSrmm' },
+      { title: 'Dear John', year: '2010', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8gDVNRDY-MJP0Y0LnSaDJAc-MpA4WewegAA&s' },
+      { title: 'Love Again', year: '2023', image: 'https://upload.wikimedia.org/wikipedia/en/2/21/Love_Again_film_poster.jpg' },
+      { title: 'The Choice', year: '2016', image: 'https://m.media-amazon.com/images/M/MV5BMTYzMDA2ODcxMV5BMl5BanBnXkFtZTgwODMzOTMzNzE@._V1_FMjpg_UX1000_.jpg' },
+      { title: 'Anyone But You', year: '2024', image: 'https://m.media-amazon.com/images/I/81vNRRVjT3L.jpg' },
+      { title: 'A Perfect Pairing', year: '2022', image: 'https://play-lh.googleusercontent.com/proxy/gN9UNWO8pWKp_uh7BIQP7N3n3vAT3SH__cRqCEX1F2l7HMcPonmDEcfpeMCBf4gGQoMXCycERHSbl_e4zYugiz-7z2KOG_fSI3P7nwyyUL4vmHCuip4dN8lYws61PdwvlpSudYU97BSQ4_rwKqN14Po9aO3hH2A8rF8inQ' },
+      { title: 'The Kissing Booth', year: '2018', image: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/The_Kissing_Booth_3.jpg/250px-The_Kissing_Booth_3.jpg' },
+      { title: 'Love and Other Drugs', year: '2010', image: 'https://m.media-amazon.com/images/I/91QV5djceIL._AC_UF894,1000_QL80_.jpg' },
+      { title: 'No Hard Feelings', year: '2023', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_f4W4W4wlDOWCk64zl_MeJh55NUqKqd3mLQ&s' },
+      { title: 'The Last Letter From Your Lover', year: '2021', image: 'https://m.media-amazon.com/images/M/MV5BMDE4Y2RiYzQtOTE1My00Yjc1LTllYjYtY2E1ZmNlZTBiNGM0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' }
     ];
 
     const movieGrid = document.getElementById('movieGrid');
 
     function displayMovies(movieArray) {
       movieGrid.innerHTML = '';
-
       movieArray.forEach(movie => {
         movieGrid.innerHTML += `
           <div class="movie-card">
-  <a href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank">
-    <img src="${movie.image}" alt="${movie.title}">
-  </a>
+            <a href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank">
+              <img src="${movie.image}" alt="${movie.title}">
+            </a>
             <div class="movie-info">
               <h3>${movie.title}</h3>
               <span>${movie.year} • Romance / Drama</span><br>
@@ -426,13 +523,14 @@
 
     function searchMovies() {
       const input = document.getElementById('searchInput').value.toLowerCase();
-
-      const filtered = movies.filter(movie =>
-        movie.title.toLowerCase().includes(input)
-      );
-
+      const filtered = movies.filter(movie => movie.title.toLowerCase().includes(input));
       displayMovies(filtered);
     }
+
+    // Search on Enter key
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') searchMovies();
+    });
   </script>
 
 </body>
