@@ -9,26 +9,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #050505; color: white; overflow-x: hidden; }
+    body::-webkit-scrollbar { width: 8px; }
+    body::-webkit-scrollbar-thumb { background: #ff004c; border-radius: 20px; }
+
+    .banner-ad-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 14px 0;
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    body {
-      background: #050505;
-      color: white;
-      overflow-x: hidden;
-    }
-
-    body::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    body::-webkit-scrollbar-thumb {
-      background: #ff004c;
-      border-radius: 20px;
+    .banner-ad-wrap.sticky-top {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(5,5,5,0.95);
+      backdrop-filter: blur(10px);
     }
 
     .hero {
@@ -38,37 +39,18 @@
       padding: 20px 6% 50px;
     }
 
-    /* ── NAV ── */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 80px;
+      margin-bottom: 40px;
       position: relative;
     }
 
-    .logo {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #ff004c;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      transition: .3s;
-      font-size: 15px;
-    }
-
-    .nav-links a:hover {
-      color: #ff004c;
-    }
+    .logo { font-size: 2rem; font-weight: 700; color: #ff004c; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { color: white; text-decoration: none; transition: .3s; font-size: 15px; }
+    .nav-links a:hover { color: #ff004c; }
 
     .ad-btn {
       background: #ff004c;
@@ -79,13 +61,8 @@
       font-weight: 600;
       transition: .3s;
     }
+    .ad-btn:hover { transform: scale(1.05); background: #ff336d; }
 
-    .ad-btn:hover {
-      transform: scale(1.05);
-      background: #ff336d;
-    }
-
-    /* ── HAMBURGER ── */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -99,7 +76,6 @@
       border: none;
       z-index: 1001;
     }
-
     .hamburger span {
       display: block;
       width: 100%;
@@ -109,28 +85,14 @@
       transition: all 0.35s ease;
       transform-origin: center;
     }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-    .hamburger.open span:nth-child(1) {
-      transform: translateY(7.5px) rotate(45deg);
-    }
-
-    .hamburger.open span:nth-child(2) {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-
-    .hamburger.open span:nth-child(3) {
-      transform: translateY(-7.5px) rotate(-45deg);
-    }
-
-    /* ── MOBILE MENU OVERLAY ── */
     .mobile-menu {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(5,5,5,0.97);
       z-index: 1000;
       flex-direction: column;
@@ -142,89 +104,17 @@
       transition: opacity 0.3s ease, transform 0.3s ease;
       pointer-events: none;
     }
+    .mobile-menu.open { display: flex; opacity: 1; transform: translateY(0); pointer-events: all; }
+    .mobile-menu a { color: white; text-decoration: none; font-size: 1.5rem; font-weight: 600; transition: color 0.3s; }
+    .mobile-menu a:hover { color: #ff004c; }
+    .mobile-menu .ad-btn { font-size: 1rem; padding: 14px 32px; }
 
-    .mobile-menu.open {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: all;
-    }
+    /* Hero — sirf heading, no search */
+    .hero-content { max-width: 650px; margin-top: 10px; padding-bottom: 10px; }
+    .hero-content h1 { font-size: 3rem; line-height: 1.2; }
 
-    .mobile-menu a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.5rem;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-
-    .mobile-menu a:hover {
-      color: #ff004c;
-    }
-
-    .mobile-menu .ad-btn {
-      font-size: 1rem;
-      padding: 14px 32px;
-    }
-
-    /* ── HERO CONTENT ── */
-    .hero-content {
-      max-width: 650px;
-      margin-top: 20px;
-    }
-
-    .hero-content h1 {
-      font-size: 4rem;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-
-    .hero-content p {
-      color: #d1d1d1;
-      margin-bottom: 30px;
-      font-size: 1rem;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 50px;
-      overflow: hidden;
-      max-width: 500px;
-      backdrop-filter: blur(10px);
-    }
-
-    .search-box input {
-      flex: 1;
-      padding: 15px 20px;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: white;
-      font-size: 15px;
-    }
-
-    .search-box button {
-      border: none;
-      background: #ff004c;
-      color: white;
-      padding: 15px 25px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* ── SECTIONS ── */
-    .section {
-      padding: 70px 6%;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      margin-bottom: 30px;
-      color: white;
-    }
+    .section { padding: 70px 6%; }
+    .section-title { font-size: 2rem; margin-bottom: 30px; color: white; }
 
     .movies-grid {
       display: grid;
@@ -237,37 +127,17 @@
       border-radius: 20px;
       overflow: hidden;
       transition: .3s;
-      position: relative;
       cursor: pointer;
       border: 1px solid rgba(255,255,255,.08);
     }
-
     .movie-card:hover {
       transform: translateY(-8px) scale(1.02);
       box-shadow: 0 15px 40px rgba(255,0,76,.25);
     }
-
-    .movie-card img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .movie-info {
-      padding: 15px;
-    }
-
-    .movie-info h3 {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-
-    .movie-info span {
-      color: #bbb;
-      font-size: 13px;
-    }
-
+    .movie-card img { width: 100%; height: 280px; object-fit: cover; display: block; }
+    .movie-info { padding: 15px; }
+    .movie-info h3 { font-size: 16px; margin-bottom: 8px; }
+    .movie-info span { color: #bbb; font-size: 13px; }
     .watch-btn {
       display: inline-block;
       margin-top: 12px;
@@ -279,10 +149,7 @@
       font-size: 13px;
       transition: .3s;
     }
-
-    .watch-btn:hover {
-      background: #ff336d;
-    }
+    .watch-btn:hover { background: #ff336d; }
 
     .ad-banner {
       margin: 60px auto;
@@ -291,16 +158,8 @@
       border-radius: 25px;
       text-align: center;
     }
-
-    .ad-banner h2 {
-      margin-bottom: 15px;
-      font-size: 2rem;
-    }
-
-    .ad-banner p {
-      margin-bottom: 20px;
-      color: #f0f0f0;
-    }
+    .ad-banner h2 { margin-bottom: 15px; font-size: 2rem; }
+    .ad-banner p { margin-bottom: 20px; color: #f0f0f0; }
 
     .footer {
       text-align: center;
@@ -309,170 +168,127 @@
       border-top: 1px solid rgba(255,255,255,.08);
     }
 
-    /* ── RESPONSIVE ── */
     @media(max-width: 768px) {
-      .hero-content h1 {
-        font-size: 2.2rem;
-      }
-
-      .hero-content {
-        margin-top: 10px;
-      }
-
-      /* hide desktop nav links, show hamburger */
-      .nav-links {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      nav {
-        margin-bottom: 40px;
-      }
-
-      .search-box {
-        border-radius: 15px;
-        flex-direction: column;
-        max-width: 100%;
-      }
-
-      .search-box input,
-      .search-box button {
-        width: 100%;
-        border-radius: 0;
-      }
-
-      .search-box button {
-        padding: 14px;
-      }
-
-      .movies-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-      }
-
-      .movie-card img {
-        height: 200px;
-      }
-
-      .movie-info h3 {
-        font-size: 13px;
-      }
-
-      .section {
-        padding: 40px 4%;
-      }
-
-      .section-title {
-        font-size: 1.4rem;
-      }
-
-      .ad-banner h2 {
-        font-size: 1.4rem;
-      }
-
-      .ad-banner {
-        padding: 25px 20px;
-        margin: 30px 0;
-      }
+      .hero-content h1 { font-size: 2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      nav { margin-bottom: 30px; }
+      .movies-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+      .movie-card img { height: 200px; }
+      .movie-info h3 { font-size: 13px; }
+      .section { padding: 40px 4%; }
+      .section-title { font-size: 1.4rem; }
+      .ad-banner h2 { font-size: 1.4rem; }
+      .ad-banner { padding: 25px 20px; margin: 30px 0; }
     }
 
     @media(max-width: 400px) {
-      .movies-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-
-      .hero-content h1 {
-        font-size: 1.8rem;
-      }
-
-      .logo {
-        font-size: 1.5rem;
-      }
+      .movies-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .hero-content h1 { font-size: 1.6rem; }
+      .logo { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Mobile Menu Overlay -->
+  <!-- AD #1 — STICKY TOP -->
+  <div class="banner-ad-wrap sticky-top">
+    <script>
+      atOptions = {
+        'key' : 'bea4a5bc6d17e1d25a28b40967ae38ca',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script src="https://fowlsdisappointed.com/bea4a5bc6d17e1d25a28b40967ae38ca/invoke.js"></script>
+  </div>
+
+  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#movies" onclick="closeMenu()">Movies</a>
     <a href="#movies" onclick="closeMenu()">Trending</a>
     <a href="#movies" onclick="closeMenu()">Popular</a>
-    <a class="ad-btn" href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank" onclick="closeMenu()">Premium Access</a>
+    <a class="ad-btn" href="https://fowlsdisappointed.com/cnczbwpmd5?key=f5734f217ef21ce6539d3bc1c71e24a4" target="_blank" onclick="closeMenu()">Premium Access</a>
   </div>
 
   <section class="hero">
     <nav>
       <div class="logo">MovieFlix Hub</div>
-
       <div class="nav-links">
         <a href="#movies">Movies</a>
         <a href="#movies">Trending</a>
         <a href="#movies">Popular</a>
-        <a class="ad-btn" href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank">Premium Access</a>
+        <a class="ad-btn" href="https://fowlsdisappointed.com/cnczbwpmd5?key=f5734f217ef21ce6539d3bc1c71e24a4" target="_blank">Premium Access</a>
       </div>
-
-      <!-- Hamburger Button -->
       <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
     </nav>
 
+    <!-- Search bar HATA diya, sirf heading -->
     <div class="hero-content">
       <h1>Watch Trending Romance & Drama Movies</h1>
-
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search movies...">
-        <button onclick="searchMovies()">Search</button>
-      </div>
     </div>
   </section>
+
+  <!-- AD #2 — HERO KE BAAD -->
+  <div class="banner-ad-wrap">
+    <script>
+      atOptions = {
+        'key' : 'bea4a5bc6d17e1d25a28b40967ae38ca',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script src="https://fowlsdisappointed.com/bea4a5bc6d17e1d25a28b40967ae38ca/invoke.js"></script>
+  </div>
 
   <section class="section" id="movies">
     <h2 class="section-title">Trending Movies</h2>
     <div class="movies-grid" id="movieGrid"></div>
   </section>
 
+  <!-- AD #3 — UNLIMITED STREAMING SE PEHLE -->
+  <div class="banner-ad-wrap">
+    <script>
+      atOptions = {
+        'key' : 'bea4a5bc6d17e1d25a28b40967ae38ca',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script src="https://fowlsdisappointed.com/bea4a5bc6d17e1d25a28b40967ae38ca/invoke.js"></script>
+  </div>
+
   <section class="section">
     <div class="ad-banner">
       <h2>Unlimited Streaming Experience</h2>
       <p>Enjoy fast movie access and trending collections with premium quality streaming.</p>
-      <a class="ad-btn" href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank">Watch Premium</a>
+      <a class="ad-btn" href="https://fowlsdisappointed.com/cnczbwpmd5?key=f5734f217ef21ce6539d3bc1c71e24a4" target="_blank">Watch Premium</a>
     </div>
   </section>
 
-  <footer class="footer">
-    © 2026 MovieFlix Hub 
-  </footer>
+  <footer class="footer">© 2026 MovieFlix Hub</footer>
 
   <script>
-    // ── Hamburger Menu ──
     function toggleMenu() {
-      const menu = document.getElementById('mobileMenu');
-      const btn = document.getElementById('hamburger');
-      menu.classList.toggle('open');
-      btn.classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
+      document.getElementById('hamburger').classList.toggle('open');
     }
-
     function closeMenu() {
-      const menu = document.getElementById('mobileMenu');
-      const btn = document.getElementById('hamburger');
-      menu.classList.remove('open');
-      btn.classList.remove('open');
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
     }
-
-    // Close menu on outside click
     document.getElementById('mobileMenu').addEventListener('click', function(e) {
       if (e.target === this) closeMenu();
     });
 
-    // ── Movies Data ──
     const movies = [
       { title: '365 Days', year: '2020', image: "https://m.media-amazon.com/images/M/MV5BODRlZGMyZDQtZmM1OC00MzUxLWEyMWMtMzhlNTU4NzkxZDMxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
       { title: 'Fifty Shades of Grey', year: '2015', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzOi_oyknoRBsHv71CNy03Va0po371ltT-cg&s' },
@@ -496,20 +312,19 @@
       { title: 'The Last Letter From Your Lover', year: '2021', image: 'https://m.media-amazon.com/images/M/MV5BMDE4Y2RiYzQtOTE1My00Yjc1LTllYjYtY2E1ZmNlZTBiNGM0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' }
     ];
 
-    const movieGrid = document.getElementById('movieGrid');
-
     function displayMovies(movieArray) {
-      movieGrid.innerHTML = '';
+      const grid = document.getElementById('movieGrid');
+      grid.innerHTML = '';
       movieArray.forEach(movie => {
-        movieGrid.innerHTML += `
+        grid.innerHTML += `
           <div class="movie-card">
-            <a href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank">
+            <a href="https://fowlsdisappointed.com/cnczbwpmd5?key=f5734f217ef21ce6539d3bc1c71e24a4" target="_blank">
               <img src="${movie.image}" alt="${movie.title}">
             </a>
             <div class="movie-info">
               <h3>${movie.title}</h3>
               <span>${movie.year} • Romance / Drama</span><br>
-              <a class="watch-btn" href="https://fowlsdisappointed.com/uewkg9dvg?key=0f9c38f2d34c53258d8581e585f36f6b" target="_blank">Watch Now</a>
+              <a class="watch-btn" href="https://fowlsdisappointed.com/cnczbwpmd5?key=f5734f217ef21ce6539d3bc1c71e24a4" target="_blank">Watch Now</a>
             </div>
           </div>
         `;
@@ -517,21 +332,9 @@
     }
 
     displayMovies(movies);
-
-    function searchMovies() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = movies.filter(movie => movie.title.toLowerCase().includes(input));
-      displayMovies(filtered);
-    }
-
-    // Search on Enter key
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') searchMovies();
-    });
   </script>
 
-
-  <!-- Popender -->
+  <!-- Popunder -->
   <script src="https://fowlsdisappointed.com/27/c1/08/27c1085dd4f5ed849046cc47211468c1.js"></script>
   <!-- Social Bar -->
   <script src="https://fowlsdisappointed.com/f9/e7/28/f9e7286f09b0b689a25de02552352387.js"></script>
